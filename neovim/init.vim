@@ -55,11 +55,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 " autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/nvim-completion-manager'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'Shougo/echodoc.vim'
 " delete all but current buffer
 Plug 'vim-scripts/BufOnly.vim', { 'on': 'Bonly' }
 " intelligent buffer closing
@@ -80,12 +80,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 " better start
 Plug 'mhinz/vim-startify'
-" echodoc
-Plug 'Shougo/echodoc.vim'
 " table-mode
 Plug 'dhruvasagar/vim-table-mode'
-" reasonml
-Plug 'reasonml-editor/vim-reason-plus'
 
 call plug#end()
 
@@ -519,7 +515,6 @@ let g:ale_lint_on_enter=0
 " ------------------------------------------------------------------------------
 
 let g:deoplete#enable_at_startup=1
-let g:deoplete#max_menu_width=0
 
 " ------------------------------------------------------------------------------
 " Neoformat
@@ -540,16 +535,14 @@ let g:javascript_plugin_flow=1
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'reason': ['ocaml-language-server', '--stdio'],
-    \ 'ocaml': ['ocaml-language-server', '--stdio'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ 'vue': ['vls']
+    \ 'javascript.jsx': ['javascript-typescript-stdio']
     \ }
 
+let g:LanguageClient_autoStop=1
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_selectionUI='fzf'
 let g:LanguageClient_diagnosticsEnable=0
+let g:LanguageClient_loggingLevel='WARN'
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
