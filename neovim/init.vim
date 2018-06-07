@@ -82,6 +82,8 @@ Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-startify'
 " table-mode
 Plug 'dhruvasagar/vim-table-mode'
+" wakatime
+Plug 'wakatime/vim-wakatime'
 
 call plug#end()
 
