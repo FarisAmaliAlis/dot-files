@@ -118,6 +118,7 @@ set nowrap                " Don't wrap lines
 set expandtab             " Use space characters in place of tab characters
 set softtabstop=2         " Two spaces soft tab stop
 set shiftwidth=2          " Two spaces when indenting
+set cmdheight=2           " Two spaces command line area height
 set signcolumn=yes        " Always show signcolumns
 set exrc                  " Folder specific configuration
 
@@ -405,22 +406,23 @@ let g:gitgutter_sign_modified_removed='ww'
 " Vim-test + VTR
 " ------------------------------------------------------------------------------
 
+" TODO: consider finding for alt or remove
 " vim-test maps
-map <silent> <leader>t :TestNearest<CR>
-map <silent> <leader>f :TestFile<CR>
-map <silent> <leader>T :TestSuite<CR>
-map <silent> <leader>r :TestLast<CR>
-map <silent> <leader>g :TestVisit<CR>
+" map <silent> <leader>t :TestNearest<CR>
+" map <silent> <leader>f :TestFile<CR>
+" map <silent> <leader>T :TestSuite<CR>
+" map <silent> <leader>r :TestLast<CR>
+" map <silent> <leader>g :TestVisit<CR>
 
 " run tests with :T
-let test#strategy = "vtr"
+" let test#strategy = "vtr"
 
 " vtr maps
-nnoremap <leader>fr :VtrFocusRunner<CR>
-nnoremap <leader>kr :VtrKillRunner<CR>
-nnoremap <leader>rr :VtrSendLinesToRunner<CR>
-nnoremap <leader>dr :VtrSendCtrlD<CR>
-nnoremap <leader>ar :VtrAttachToPane<CR>
+" nnoremap <leader>fr :VtrFocusRunner<CR>
+" nnoremap <leader>kr :VtrKillRunner<CR>
+" nnoremap <leader>rr :VtrSendLinesToRunner<CR>
+" nnoremap <leader>dr :VtrSendCtrlD<CR>
+" nnoremap <leader>ar :VtrAttachToPane<CR>
 
 " ------------------------------------------------------------------------------
 " Lightline
@@ -534,18 +536,24 @@ let g:javascript_plugin_flow=1
 " ------------------------------------------------------------------------------
 
 let g:LanguageClient_serverCommands = {
+    \ 'go': ['go-langserver'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio']
     \ }
 
 let g:LanguageClient_autoStop=1
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_selectionUI='fzf'
-let g:LanguageClient_diagnosticsEnable=0
+let g:LanguageClient_diagnosticsEnable=1
 let g:LanguageClient_loggingLevel='WARN'
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <leader>fm :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <leader>fs :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <leader>fd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <leader>ft :call LanguageClient_textDocument_typeDefinition()<CR>
+nnoremap <silent> <leader>fi :call LanguageClient_textDocument_implementation()<CR>
 
 " ------------------------------------------------------------------------------
 " Table Mode
