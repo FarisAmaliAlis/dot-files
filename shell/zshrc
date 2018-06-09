@@ -104,28 +104,16 @@ export MYNVIMRC="~/.config/nvim/init.vim"
 
 # Environments
 export KEYTIMEOUT=1
-export WORKSPACE=$HOME/Workspace
 export GOPATH=$WORKSPACE/gospace
 export PYENV_ROOT=$HOME/.pyenv
+export WORKSPACE=$HOME/Workspace
 
 # PATH
 export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$HOME/.crenv/bin:$PATH
-export PATH=$HOME/.goenv/bin:$PATH
-export PATH=$HOME/.jenv/bin:$PATH
-export PATH=$HOME/.nodev/bin:$PATH
-export PATH=$HOME/.pyenv/bin:$PATH
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 
 # ==============================================================================
 # Hooks
 # ==============================================================================
-
-eval "$(jenv init -)"
-eval "$(exenv init -)"
-eval "$(pyenv init -)"
-eval "$(rbenv init -)"
-eval "$(nodenv init -)"
-eval "$(direnv hook zsh)"

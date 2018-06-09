@@ -31,35 +31,29 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 " easymotion
 Plug 'easymotion/vim-easymotion'
-" neoformat
-Plug 'sbdchd/neoformat'
 " ale (Linting Engine)
 Plug 'w0rp/ale'
-" editorconfig
-Plug 'editorconfig/editorconfig-vim'
 " emmet
 Plug 'mattn/emmet-vim'
-" running tests with different ganularities
-Plug 'janko-m/vim-test'
-" vtr
-Plug 'christoomey/vim-tmux-runner'
 " git commit message
 Plug 'rhysd/committia.vim'
 " fzf binding
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " nerdtree file browser
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
-" lightline
-Plug 'itchyny/lightline.vim'
-" buffers tabline
-Plug 'ap/vim-buftabline'
+" airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" buffer surfer
+Plug 'ton/vim-bufsurf'
 " autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/echodoc.vim'
+" lsp
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-Plug 'Shougo/echodoc.vim'
 " delete all but current buffer
 Plug 'vim-scripts/BufOnly.vim', { 'on': 'Bonly' }
 " intelligent buffer closing
@@ -76,14 +70,14 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'roxma/vim-tmux-clipboard'
 " gitgutter
 Plug 'airblade/vim-gitgutter'
-" tagbar
-Plug 'majutsushi/tagbar'
-" better start
-Plug 'mhinz/vim-startify'
 " table-mode
 Plug 'dhruvasagar/vim-table-mode'
+" multiple cursors
+Plug 'terryma/vim-multiple-cursors'
 " wakatime
 Plug 'wakatime/vim-wakatime'
+" vimwiki
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -100,7 +94,7 @@ set shell=/bin/zsh        " Setting shell to zsh
 set number                " Line numbers on
 set noshowmode            " Always show mode
 set showcmd               " Show commands as you type them
-set textwidth=125         " Text width is 120 characters
+set textwidth=125         " Text width is 125 characters
 set cmdheight=1           " Command line height
 set pumheight=10          " Completion window max size
 set noswapfile            " New buffers will be loaded without creating a swapfile
@@ -123,38 +117,16 @@ set shiftwidth=2          " Two spaces when indenting
 set cmdheight=2           " Two spaces command line area height
 set signcolumn=yes        " Always show signcolumns
 set exrc                  " Folder specific configuration
-
-" ==============================================================================
-" Split settings
-" ==============================================================================
-
-set splitbelow " Splitting a window will put the new window below the current
-set splitright " Splitting a window will put the new window right of the current
-
-" ==============================================================================
-" Timeout settings
-" ==============================================================================
-
-" Time out on key codes but not mappings. Basically this makes terminal Vim
-" work sanely. (by Steve Losh)
-set notimeout
-set ttimeout
-set ttimeoutlen=10
-
-" ==============================================================================
-" Spelling settings
-" ==============================================================================
-
-set nospell
-
-" ==============================================================================
-" Search settings
-" ==============================================================================
-
-set ignorecase " Ignore case by default
-set smartcase  " Make search case sensitive only if it contains U letters
-set wrapscan   " Search again from top when reached the bottom
-set nohlsearch " Don't highlight after search
+set splitbelow            " Splitting a window will put the new window below the current
+set splitright            " Splitting a window will put the new window right of the current
+set notimeout             " Time out on key codes but not mappings. Basically this makes terminal Vim
+set ttimeout              " work sanely.
+set ttimeoutlen=10        " (by Steve Losh)
+set nospell               " Disable spellcheck
+set ignorecase            " Ignore case by default
+set smartcase             " Make search case sensitive only if it contains U letters
+set wrapscan              " Search again from top when reached the bottom
+set nohlsearch            " Don't highlight after search
 
 " ==============================================================================
 " Filetype settings
@@ -188,16 +160,10 @@ colorscheme deep-space
 " Mappings
 " ==============================================================================
 
-" ------------------------------------------------------------------------------
-" Leader
-" ------------------------------------------------------------------------------
-
+" leader
 let g:mapleader="\<space>"
 
-" ------------------------------------------------------------------------------
-" Insane Defaults
-" ------------------------------------------------------------------------------
-
+" defaults
 nnoremap <up> <NOP>
 nnoremap <down> <NOP>
 nnoremap <left> <NOP>
@@ -213,14 +179,10 @@ inoremap <F1> <NOP>
 nnoremap <F1> <NOP>
 nnoremap Q <NOP>
 
-" ------------------------------------------------------------------------------
-" Insane Overrides
-" ------------------------------------------------------------------------------
-
-" Easier window switching
+" easier window switching
 nmap <silent> <C-w><C-w> :call utils#intelligentCycling()<CR>
 
-" Visual linewise up and down by default (and use gj gk to go quicker)
+" visual linewise up and down by default (and use gj gk to go quicker)
 nnoremap j gj
 nnoremap k gk
 nnoremap gj 5j
@@ -230,13 +192,13 @@ vnoremap k gk
 vnoremap gj 5j
 vnoremap gk 5k
 
-" When jump to next match also center screen
+" when jump to next match also center screen
 nnoremap <silent> n :norm! nzz<CR>
 nnoremap <silent> N :norm! Nzz<CR>
 vnoremap <silent> n :norm! nzz<CR>
 vnoremap <silent> N :norm! Nzz<CR>
 
-" Same when moving up and down
+" same when moving up and down
 nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
 nnoremap <C-f> <C-f>zz
@@ -246,25 +208,25 @@ vnoremap <C-d> <C-d>zz
 vnoremap <C-f> <C-f>zz
 vnoremap <C-b> <C-b>zz
 
-" Remap H and L (top, bottom of screen to left and right end of line)
+" remap H and L (top, bottom of screen to left and right end of line)
 nnoremap H ^
 nnoremap L $
 vnoremap H ^
 vnoremap L g_
 
-" More logical Y (default was alias for yy)
+" more logical Y (default was alias for yy)
 nnoremap Y y$
 
-" Don't yank to default register when changing something
+" don't yank to default register when changing something
 nnoremap c "xc
 xnoremap c "xc
 
-" After block yank and paste, move cursor to the end of operated text and don't override register
+" after block yank and paste, move cursor to the end of operated text and don't override register
 vnoremap y y`]
 vnoremap p "_dP`]
 nnoremap p p`]
 
-" Use CamelCaseMotion instead of default motions
+" use CamelCaseMotion instead of default motions
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
@@ -274,89 +236,85 @@ sunmap b
 sunmap e
 sunmap ge
 
-" Fix the cw at the end of line bug default vim has special treatment (:help cw)
+" fix the cw at the end of line bug default vim has special treatment (:help cw)
 nmap cw ce
 nmap dw de
 
-" Uppercase word in insert mode
+" uppercase word in insert mode
 inoremap <C-u> <ESC>mzgUiw`za
 
-" Matching brackets with TAB (using matchit) (Breaks the <C-i> jump)
+" matching brackets with TAB (using matchit) (Breaks the <C-i> jump)
 map <TAB> %
 silent! unmap [%
 silent! unmap ]%
 
-" Don't cancel visual select when shifting
+" don't cancel visual select when shifting
 xnoremap <  <gv
 xnoremap >  >gv
 
-" Make . work with visually selected lines
+" make . work with visually selected lines
 xnoremap . :norm.<CR>
 
-" Navigate popup menu
+" navigate popup menu
 inoremap <expr> <C-j> pumvisible() ? "\<C-N>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-P>" : "\<C-k>"
 
-" ------------------------------------------------------------------------------
-" Common tasks
-" ------------------------------------------------------------------------------
-
-" Quick save and close buffer
+" quick save and close buffer
 nnoremap ,w :w<CR>
 nnoremap <silent> ,c :Sayonara!<CR>
 nnoremap <silent> ,q :Sayonara<CR>
 
-" Yank and paste from clipboard
+" yank and paste from clipboard
 nnoremap ,y "+y
 vnoremap ,y "+y
 nnoremap ,yy "+yy
 nnoremap ,p "+p
 
-" Move visual block
+" move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" Reselect last-pasted text
+" reselect last-pasted text
 nnoremap gp `[v`]
 
-" Keep the cursor in place while joining lines
+" keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
 " [S]plit line (sister to [J]oin lines) S is covered by cc.
 nnoremap S mzi<CR><ESC>`z
 
-" Easier fold toggling
+" easier fold toggling
 nnoremap ,z za
 
-" Start substitute on current word under the cursor
+" start substitute on current word under the cursor
 nnoremap ,s :%s///gc<Left><Left><Left>
 
-" Start search on current word under the cursor
+" start search on current word under the cursor
 nnoremap ,/ /<CR>
 
-" Start reverse search on current word under the cursor
+" start reverse search on current word under the cursor
 nnoremap ,? ?<CR>
 
-" Faster sort
+" faster sort
 vnoremap ,s :!sort<CR>
 
-" Quiting and saving all
+" quiting and saving all
 cnoremap ww wqall
 cnoremap qq qall
 
-" Terminal-mode escape
+" terminal-mode escape
 tnoremap <Esc> <C-\><C-n>
 
 " ------------------------------------------------------------------------------
 " F-key actions
 " ------------------------------------------------------------------------------
 
-" Toggle NERDTree
+" toggle NERDTree
 nnoremap <silent> <F1> :call utils#nerdWrapper()<CR>
 " Toggle tagbar
-nnoremap <silent> <F2> :TagbarToggle<CR>
+" nnoremap <silent> <F2> :TagbarToggle<CR>
 " Toggle fmt
-nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
+" nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
 " Source (reload configuration)
 nnoremap <silent> <F4> :source $MYVIMRC<CR>
 " Toggle pastemode
@@ -381,14 +339,14 @@ nnoremap <silent> <F7> :set list!<CR> :set list?<CR>
 " ------------------------------------------------------------------------------
 
 " Intelligent windows resizing using ctrl + arrow keys
-nnoremap <silent> <C-Right> :call utils#intelligentVerticalResize('right')<CR>
-nnoremap <silent> <C-Left> :call utils#intelligentVerticalResize('left')<CR>
-nnoremap <silent> <C-Up> :resize +1<CR>
-nnoremap <silent> <C-Down> :resize -1<CR>
+" nnoremap <silent> <C-Right> :call utils#intelligentVerticalResize('right')<CR>
+" nnoremap <silent> <C-Left> :call utils#intelligentVerticalResize('left')<CR>
+" nnoremap <silent> <C-Up> :resize +1<CR>
+" nnoremap <silent> <C-Down> :resize -1<CR>
 
 " Buffers navigation and management
-nnoremap <silent> + :bn<CR>
-nnoremap <silent> _ :bp<CR>
+nnoremap <silent> + :BufSurfForward<CR>
+nnoremap <silent> _ :BufSurfBack<CR>
 
 " ==============================================================================
 " Plugin settings
@@ -398,64 +356,19 @@ nnoremap <silent> _ :bp<CR>
 " Gitgutter
 " ------------------------------------------------------------------------------
 
-let g:gitgutter_sign_added='xx'
-let g:gitgutter_sign_modified='yy'
-let g:gitgutter_sign_removed='zz'
-let g:gitgutter_sign_removed_first_line='^^'
-let g:gitgutter_sign_modified_removed='ww'
+" let g:gitgutter_sign_added='xx'
+" let g:gitgutter_sign_modified='yy'
+" let g:gitgutter_sign_removed='zz'
+" let g:gitgutter_sign_removed_first_line='^^'
+" let g:gitgutter_sign_modified_removed='ww'
 
 " ------------------------------------------------------------------------------
-" Vim-test + VTR
+" Airline
 " ------------------------------------------------------------------------------
 
-" TODO: consider finding for alt or remove
-" vim-test maps
-" map <silent> <leader>t :TestNearest<CR>
-" map <silent> <leader>f :TestFile<CR>
-" map <silent> <leader>T :TestSuite<CR>
-" map <silent> <leader>r :TestLast<CR>
-" map <silent> <leader>g :TestVisit<CR>
-
-" run tests with :T
-" let test#strategy = "vtr"
-
-" vtr maps
-" nnoremap <leader>fr :VtrFocusRunner<CR>
-" nnoremap <leader>kr :VtrKillRunner<CR>
-" nnoremap <leader>rr :VtrSendLinesToRunner<CR>
-" nnoremap <leader>dr :VtrSendCtrlD<CR>
-" nnoremap <leader>ar :VtrAttachToPane<CR>
-
-" ------------------------------------------------------------------------------
-" Lightline
-" ------------------------------------------------------------------------------
-
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'tab': {
-      \   'active': [ 'filename' ],
-      \   'inactive': [ 'filename' ]
-      \ },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'filetype', 'fileencoding', 'fileformat' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"HELP":&readonly?"RO":""}'
-      \ },
-      \ 'component_function': {
-      \   'mode': 'utils#lightLineMode',
-      \   'filename': 'utils#lightLineFilename',
-      \   'filetype': 'utils#lightLineFiletype',
-      \   'fileformat': 'utils#lightLineFileformat',
-      \   'fileencoding': 'utils#lightLineFileencoding'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&readonly)'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
+let g:airline_theme='minimalist'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
 " ------------------------------------------------------------------------------
 " Fugitive
@@ -489,12 +402,6 @@ nnoremap <leader>gg :Ag<Space>
 nnoremap <silent> ,g :call utils#searchCurrentWordWithAg()<CR>
 
 " ------------------------------------------------------------------------------
-" BufTabLine
-" ------------------------------------------------------------------------------
-
-let g:buftabline_numbers=2
-
-" ------------------------------------------------------------------------------
 " BufOnly
 " ------------------------------------------------------------------------------
 
@@ -508,24 +415,19 @@ let g:AutoPairsFlyMode=1
 let g:AutoPairsShortcutBackInsert='<C-v>'
 
 " ------------------------------------------------------------------------------
-" Ale
+" ALE
 " ------------------------------------------------------------------------------
 
+let g:ale_enabled=0
 let g:ale_lint_on_text_changed='never'
 let g:ale_lint_on_enter=0
+let g:ale_completion_enabled=0
 
 " ------------------------------------------------------------------------------
 " Deoplete
 " ------------------------------------------------------------------------------
 
 let g:deoplete#enable_at_startup=1
-
-" ------------------------------------------------------------------------------
-" Neoformat
-" ------------------------------------------------------------------------------
-
-let g:neoformat_verbose=0
-let g:neoformat_try_formatprg=1
 
 " ------------------------------------------------------------------------------
 " Polyglot
@@ -540,9 +442,9 @@ let g:javascript_plugin_flow=1
 let g:LanguageClient_serverCommands = {
     \ 'go': ['go-langserver'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'typescript': ['javascript-typescript-stdio'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio']
+    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'javascript': ['typescript-language-server', '--stdio'],
+    \ 'javascript.jsx': ['typescript-language-server', '--stdio']
     \ }
 
 let g:LanguageClient_autoStop=1
@@ -554,8 +456,15 @@ let g:LanguageClient_loggingLevel='WARN'
 nnoremap <silent> <leader>fm :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <leader>fs :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <leader>fd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <leader>ft :call LanguageClient_textDocument_typeDefinition()<CR>
+nnoremap <silent> <leader>fr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> <leader>fi :call LanguageClient_textDocument_implementation()<CR>
+
+" ------------------------------------------------------------------------------
+" vim-multiple-cursors
+" ------------------------------------------------------------------------------
+
+highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+highlight link multiple_cursors_visual Visual
 
 " ------------------------------------------------------------------------------
 " Table Mode
@@ -563,24 +472,33 @@ nnoremap <silent> <leader>fi :call LanguageClient_textDocument_implementation()<
 
 let g:table_mode_corner='|'
 
+" ------------------------------------------------------------------------------
+" Vimwiki
+" ------------------------------------------------------------------------------
+
+let g:vimwiki_list = [{
+    \ 'path': '~/.org/',
+    \ 'diary_rel_path': 'journal/',
+    \ 'diary_index': 'journal' }]
+
 " ==============================================================================
 " Autocommands
 " ==============================================================================
 
-" Remove trailing whitespaces automatically before save
+" remove trailing whitespaces automatically before save
 autocmd BufWritePre * call utils#stripTrailingWhitespaces()
 
-" Resize splits when the window is resized {{{
+" resize splits when the window is resized
 autocmd VimResized * :wincmd =
 
-" Prettier settings
+" prettier settings
 autocmd FileType javascript setlocal
-      \ formatprg=prettier\ --stdin\ --parser=flow\ --single-quote\ --print-width=120\
+      \ formatprg=prettier\ --stdin\ --parser=flow\ --single-quote\ --print-width=125\
 
-" Run checktime in buffers, but avoiding the "Command Line" (q:) window
+" run checktime in buffers, but avoiding the "Command Line" (q:) window
 autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
 
-" Make sure Vim returns to the same line when you reopen a file.
+" make sure Vim returns to the same line when you reopen a file.
 augroup line_return
   au!
   au BufReadPost *
@@ -589,7 +507,7 @@ augroup line_return
         \ endif
 augroup END
 
-" Aug autopairs to not auto close on rust's lifetime syntax
+" aug autopairs to not auto close on rust's lifetime syntax
 augroup vimrc-rust-autopairs
   autocmd!
   autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
