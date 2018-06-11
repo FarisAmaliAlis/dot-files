@@ -14,7 +14,7 @@ call plug#begin('~/.config/nvim/plugged')
 " START-OF-PLUG
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " colorscheme
-Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'tyrannicaltoucan/vim-quantum'
 " automatically closing pair stuff
 Plug 'jiangmiao/auto-pairs'
 " commenting support (gc)
@@ -33,6 +33,8 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'easymotion/vim-easymotion'
 " ale (Linting Engine)
 Plug 'w0rp/ale'
+" neoformat
+Plug 'sbdchd/neoformat'
 " emmet
 Plug 'mattn/emmet-vim'
 " git commit message
@@ -132,6 +134,7 @@ set nohlsearch            " Don't highlight after search
 " Filetype settings
 " ==============================================================================
 
+syntax on
 filetype plugin on
 filetype indent on
 
@@ -152,9 +155,8 @@ endif
 " Colorscheme + Highlighting settings
 " ==============================================================================
 
-syntax on
-set background=dark
-colorscheme deep-space
+let g:quantum_black=1
+colorscheme quantum
 
 " ==============================================================================
 " Mappings
@@ -314,7 +316,7 @@ nnoremap <silent> <F1> :call utils#nerdWrapper()<CR>
 " Toggle tagbar
 " nnoremap <silent> <F2> :TagbarToggle<CR>
 " Toggle fmt
-" nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
+nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
 " Source (reload configuration)
 nnoremap <silent> <F4> :source $MYVIMRC<CR>
 " Toggle pastemode
@@ -367,8 +369,6 @@ nnoremap <silent> _ :BufSurfBack<CR>
 " ------------------------------------------------------------------------------
 
 let g:airline_theme='minimalist'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
 
 " ------------------------------------------------------------------------------
 " Fugitive
@@ -440,23 +440,27 @@ let g:javascript_plugin_flow=1
 " ------------------------------------------------------------------------------
 
 let g:LanguageClient_serverCommands = {
+    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
     \ 'go': ['go-langserver'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'typescript': ['typescript-language-server', '--stdio'],
-    \ 'javascript': ['typescript-language-server', '--stdio'],
-    \ 'javascript.jsx': ['typescript-language-server', '--stdio']
+    \ 'typescript': ['javascript-typescript-stdio']
     \ }
 
-let g:LanguageClient_autoStop=1
 let g:LanguageClient_autoStart=1
-let g:LanguageClient_selectionUI='fzf'
+let g:LanguageClient_autoStop=1
 let g:LanguageClient_diagnosticsEnable=1
+let g:LanguageClient_loadSettings=1
 let g:LanguageClient_loggingLevel='WARN'
+let g:LanguageClient_selectionUI='fzf'
 
 nnoremap <silent> <leader>fm :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <leader>fs :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <leader>fd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <leader>fr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> <leader>ff :call LanguageClient_textDocument_formatting()<CR>
 nnoremap <silent> <leader>fi :call LanguageClient_textDocument_implementation()<CR>
 
 " ------------------------------------------------------------------------------

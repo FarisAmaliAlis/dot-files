@@ -105,7 +105,6 @@ export MYNVIMRC="~/.config/nvim/init.vim"
 # Environments
 export KEYTIMEOUT=1
 export GOPATH=$WORKSPACE/gospace
-export PYENV_ROOT=$HOME/.pyenv
 export WORKSPACE=$HOME/Workspace
 
 # PATH
@@ -117,3 +116,5 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # ==============================================================================
 # Hooks
 # ==============================================================================
+
+eval "$(direnv hook zsh)"

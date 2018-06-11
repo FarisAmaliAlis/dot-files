@@ -30,6 +30,7 @@ ehthumbs.db
 .nvimrc
 .vscode
 Session.vim
+.vim/
 
 # Misc.
 # ===========================
