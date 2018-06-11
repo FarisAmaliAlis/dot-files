@@ -40,7 +40,8 @@ Plug 'mattn/emmet-vim'
 " git commit message
 Plug 'rhysd/committia.vim'
 " fzf binding
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 " nerdtree file browser
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 " airline
