@@ -81,6 +81,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'wakatime/vim-wakatime'
 " vimwiki
 Plug 'vimwiki/vimwiki'
+" obsession stores sessions
+Plug 'tpope/vim-obsession'
 
 call plug#end()
 
@@ -429,6 +431,13 @@ let g:ale_completion_enabled=0
 " ------------------------------------------------------------------------------
 
 let g:deoplete#enable_at_startup=1
+
+" ------------------------------------------------------------------------------
+" Neoformat
+" ------------------------------------------------------------------------------
+
+let g:neoformat_verbose=0
+let g:neoformat_try_formatprg=1
 
 " ------------------------------------------------------------------------------
 " Polyglot
