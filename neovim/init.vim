@@ -455,6 +455,7 @@ let g:LanguageClient_serverCommands = {
     \ 'go': ['go-langserver'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'ruby': ['solargraph', 'stdio'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'typescript': ['javascript-typescript-stdio']
     \ }

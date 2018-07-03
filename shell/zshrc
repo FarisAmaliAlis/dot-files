@@ -108,11 +108,12 @@ export MYNVIMRC="~/.config/nvim/init.vim"
 
 # Environments
 export KEYTIMEOUT=1
-export GOPATH=$WORKSPACE/gospace
-export WORKSPACE=$HOME/Workspace
 
 # Directories
+export DEPOT_TOOLS_PATH=$HOME/.depot_tools
+export GOPATH=$WORKSPACE/gospace
 export NVM_DIR="$HOME/.nvm"
+export WORKSPACE=$HOME/Workspace
 
 # PATH
 export PATH=$GOPATH/bin:$PATH
