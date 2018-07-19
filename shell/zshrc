@@ -137,4 +137,3 @@ eval "$(direnv hook zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 [ -f ~/.rocket-aliases.zsh ] && source ~/.rocket-aliases.zsh
-

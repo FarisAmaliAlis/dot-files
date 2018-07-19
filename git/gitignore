@@ -7,6 +7,10 @@
 .java-version
 .tool-versions
 
+# LSP
+# ==========================
+compile_commands.json
+
 # Lints
 # ===========================
 .overcommit.yml

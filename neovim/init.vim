@@ -99,7 +99,7 @@ set shell=/bin/zsh        " Setting shell to zsh
 set number                " Line numbers on
 set noshowmode            " Always show mode
 set showcmd               " Show commands as you type them
-set textwidth=125         " Text width is 125 characters
+set textwidth=79          " Text width is 79 characters max
 set cmdheight=1           " Command line height
 set pumheight=10          " Completion window max size
 set noswapfile            " New buffers will be loaded without creating a swapfile
@@ -437,7 +437,14 @@ let g:deoplete#enable_at_startup=1
 " ------------------------------------------------------------------------------
 
 let g:neoformat_verbose=0
-let g:neoformat_try_formatprg=1
+
+let g:neoformat_enabled_python = ['yapf']
+
+let g:neoformat_cpp_clangformat = {
+            \ 'exe': 'clang-format',
+            \ 'args': ['-style=Google'],
+            \ 'stdin': 1
+            \ }
 
 " ------------------------------------------------------------------------------
 " Polyglot
@@ -527,3 +534,19 @@ augroup vimrc-rust-autopairs
   autocmd!
   autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
 augroup END
+
+" number stuff
+set number
+set relativenumber
+
+augroup linenumbers
+  autocmd!
+  autocmd BufEnter *    :set relativenumber
+  autocmd BufLeave *    :set number norelativenumber
+  autocmd WinEnter *    :set relativenumber
+  autocmd WinLeave *    :set number norelativenumber
+  autocmd InsertEnter * :set number norelativenumber
+  autocmd InsertLeave * :set relativenumber
+  autocmd FocusLost *   :set number norelativenumber
+  autocmd FocusGained * :set relativenumber
+augroup END" number stuff
