@@ -31,8 +31,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 " easymotion
 Plug 'easymotion/vim-easymotion'
-" ale (Linting Engine)
-Plug 'w0rp/ale'
 " neoformat
 Plug 'sbdchd/neoformat'
 " emmet
@@ -83,6 +81,12 @@ Plug 'wakatime/vim-wakatime'
 Plug 'vimwiki/vimwiki'
 " obsession stores sessions
 Plug 'tpope/vim-obsession'
+" Neosnippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+" Testrunner
+Plug 'janko-m/vim-test'
+Plug 'christoomey/vim-tmux-runner'
 
 call plug#end()
 
@@ -314,7 +318,7 @@ tnoremap <Esc> <C-\><C-n>
 " F-key actions
 " ------------------------------------------------------------------------------
 
-" toggle NERDTree
+" Toggle NERDTree
 nnoremap <silent> <F1> :call utils#nerdWrapper()<CR>
 " Toggle tagbar
 " nnoremap <silent> <F2> :TagbarToggle<CR>
@@ -371,7 +375,9 @@ nnoremap <silent> _ :BufSurfBack<CR>
 " Airline
 " ------------------------------------------------------------------------------
 
-let g:airline_theme='minimalist'
+" let g:airline_theme='minimalist'
+
+let g:airline_theme='night_owl'
 
 " ------------------------------------------------------------------------------
 " Fugitive
@@ -416,15 +422,6 @@ nnoremap ,C :Bonly<CR>
 
 let g:AutoPairsFlyMode=1
 let g:AutoPairsShortcutBackInsert='<C-v>'
-
-" ------------------------------------------------------------------------------
-" ALE
-" ------------------------------------------------------------------------------
-
-let g:ale_enabled=0
-let g:ale_lint_on_text_changed='never'
-let g:ale_lint_on_enter=0
-let g:ale_completion_enabled=0
 
 " ------------------------------------------------------------------------------
 " Deoplete
@@ -502,6 +499,48 @@ let g:vimwiki_list = [{
     \ 'path': '~/.org/',
     \ 'diary_rel_path': 'journal/',
     \ 'diary_index': 'journal' }]
+
+" ------------------------------------------------------------------------------
+" Neosnippets
+" ------------------------------------------------------------------------------
+let g:neosnippet#enable_completed_snippet = 1
+let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
+
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><tab>
+	 \ neosnippet#expandable_or_jumpable() ?
+	 \    "\<Plug>(neosnippet_expand_or_jump)" :
+         \ 	  pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+\ "\<plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" ==============================================================================
+" Test + VTR
+" ==============================================================================
+
+let test#strategy = "vtr"
+
+nmap <silent> t<C-n> :TestNearest<CR> " t Ctrl+n
+nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
+nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
+nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
+nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
+
+nnoremap <leader>fr :VtrFocusRunner<cr>
+nnoremap <leader>kr :VtrKillRunner<cr>
+nnoremap <leader>rr :VtrSendLinesToRunner<cr>
+nnoremap <leader>dr :VtrSendCtrlD<cr>
+nnoremap <leader>ar :VtrAttachToPane<cr>
 
 " ==============================================================================
 " Autocommands
