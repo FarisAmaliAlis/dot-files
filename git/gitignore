@@ -38,7 +38,9 @@ Session.vim
 
 # Misc.
 # ===========================
+.gitignore
 .rake_tasks
 .starscope.db
 .tags
 tags
+depot_tools/
