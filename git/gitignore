@@ -1,6 +1,7 @@
 # Envs
 # ===========================
 .envrc
+.nvmrc
 .go-version
 .node-version
 .ruby-version
