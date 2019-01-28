@@ -79,14 +79,6 @@ function! g:utils#lightLineFileencoding() abort
   return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction
 
-" File name function for Lightline statusline
-function! g:utils#lightLineFilename() abort
-  let l:fname = expand('%:t')
-  return l:fname =~? 'NERD_tree' ? 'NERDTree' :
-        \ &filetype ==? 'unite' ? g:unite#get_status_string() :
-        \ ('' !=# l:fname ? l:fname : '[No Name]')
-endfunction
-
 " Search current word with grep
 function! g:utils#searchCurrentWordWithAg() abort
   execute 'Ag' expand('<cword>')

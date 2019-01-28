@@ -24,7 +24,7 @@ Plug 'bkad/CamelCaseMotion'
 " heuristically set indent settings
 Plug 'tpope/vim-sleuth'
 " highlighting for all
-Plug 'sheerun/vim-polyglot'
+Plug 'google/vim-jsonnet'
 " replace selection with paste
 Plug 'vim-scripts/ReplaceWithRegister'
 " split - join multilines
@@ -40,8 +40,6 @@ Plug 'rhysd/committia.vim'
 " fzf binding
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-" nerdtree file browser
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -78,15 +76,9 @@ Plug 'terryma/vim-multiple-cursors'
 " wakatime
 Plug 'wakatime/vim-wakatime'
 " vimwiki
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 " obsession stores sessions
 Plug 'tpope/vim-obsession'
-" Neosnippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-" Testrunner
-Plug 'janko-m/vim-test'
-Plug 'christoomey/vim-tmux-runner'
 
 call plug#end()
 
@@ -101,9 +93,10 @@ call plug#end()
 language en_US
 set shell=/bin/zsh        " Setting shell to zsh
 set number                " Line numbers on
+set relativenumber        " Relative numbers on
 set noshowmode            " Always show mode
 set showcmd               " Show commands as you type them
-set textwidth=79          " Text width is 79 characters max
+set textwidth=99          " Text width is 99 characters max
 set cmdheight=1           " Command line height
 set pumheight=10          " Completion window max size
 set noswapfile            " New buffers will be loaded without creating a swapfile
@@ -318,10 +311,10 @@ tnoremap <Esc> <C-\><C-n>
 " F-key actions
 " ------------------------------------------------------------------------------
 
-" Toggle NERDTree
-nnoremap <silent> <F1> :call utils#nerdWrapper()<CR>
-" Toggle tagbar
-" nnoremap <silent> <F2> :TagbarToggle<CR>
+" Netrw explore
+nnoremap <silent> <F1> :Explore<CR>
+" Free
+" nnoremap <silent> <F2>
 " Toggle fmt
 nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
 " Source (reload configuration)
@@ -348,10 +341,10 @@ nnoremap <silent> <F7> :set list!<CR> :set list?<CR>
 " ------------------------------------------------------------------------------
 
 " Intelligent windows resizing using ctrl + arrow keys
-" nnoremap <silent> <C-Right> :call utils#intelligentVerticalResize('right')<CR>
-" nnoremap <silent> <C-Left> :call utils#intelligentVerticalResize('left')<CR>
-" nnoremap <silent> <C-Up> :resize +1<CR>
-" nnoremap <silent> <C-Down> :resize -1<CR>
+nnoremap <silent> <C-Right> :call utils#intelligentVerticalResize('right')<CR>
+nnoremap <silent> <C-Left> :call utils#intelligentVerticalResize('left')<CR>
+nnoremap <silent> <C-Up> :resize +1<CR>
+nnoremap <silent> <C-Down> :resize -1<CR>
 
 " Buffers navigation and management
 nnoremap <silent> + :BufSurfForward<CR>
@@ -375,8 +368,6 @@ nnoremap <silent> _ :BufSurfBack<CR>
 " Airline
 " ------------------------------------------------------------------------------
 
-" let g:airline_theme='minimalist'
-
 let g:airline_theme='night_owl'
 
 " ------------------------------------------------------------------------------
@@ -386,19 +377,6 @@ let g:airline_theme='night_owl'
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gH :Gbrowse<CR>
 vnoremap <leader>gH :Gbrowse<CR>
-
-" ------------------------------------------------------------------------------
-" NERDTree
-" ------------------------------------------------------------------------------
-
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeWinSize=40
-let g:NERDTreeAutoDeleteBuffer=1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeHighlightCursorline=0
-let g:NERDTreeRespectWildIgnore=1
-let g:NERDTreeIgnore=['node_modules$[[dir]]']
-let g:NERDTreeSortOrder=['\/$','^\.','^[a-z]','^[A-Z]']
 
 " ------------------------------------------------------------------------------
 " FZF
@@ -433,40 +411,34 @@ let g:deoplete#enable_at_startup=1
 " Neoformat
 " ------------------------------------------------------------------------------
 
-let g:neoformat_verbose=0
-
-let g:neoformat_enabled_python = ['yapf']
-
-let g:neoformat_cpp_clangformat = {
-            \ 'exe': 'clang-format',
-            \ 'args': ['-style=Google'],
-            \ 'stdin': 1
-            \ }
+let g:neoformat_verbose=1
 
 " ------------------------------------------------------------------------------
 " Polyglot
 " ------------------------------------------------------------------------------
 
-let g:javascript_plugin_flow=1
+let g:vim_markdown_conceal = 0
 
 " ------------------------------------------------------------------------------
 " LanguageClient
 " ------------------------------------------------------------------------------
+let g:LanguageClient_rootMarkers = {
+    \ 'go': ['.git', 'go.mod'],
+    \ }
 
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'go': ['go-langserver'],
+    \ 'go': ['bingo', '--format-style', 'goimports'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'ruby': ['solargraph', 'stdio'],
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'typescript': ['javascript-typescript-stdio']
+    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'typescript.tsx': ['javascript-typescript-stdio']
     \ }
 
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_autoStop=1
-let g:LanguageClient_diagnosticsEnable=1
+let g:LanguageClient_diagnosticsEnable=0
 let g:LanguageClient_loadSettings=1
 let g:LanguageClient_loggingLevel='WARN'
 let g:LanguageClient_selectionUI='fzf'
@@ -495,52 +467,21 @@ let g:table_mode_corner='|'
 " Vimwiki
 " ------------------------------------------------------------------------------
 
-let g:vimwiki_list = [{
-    \ 'path': '~/.org/',
-    \ 'diary_rel_path': 'journal/',
-    \ 'diary_index': 'journal' }]
+" let notes = {}
+" let notes.path = "~/.org/notes/"
+" let notes.diary_index = 'journal'
+" let notes.diary_header = '📖'
+" let notes.diary_rel_path = 'journal'
 
-" ------------------------------------------------------------------------------
-" Neosnippets
-" ------------------------------------------------------------------------------
-let g:neosnippet#enable_completed_snippet = 1
-let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
+" let drafts = {}
+" let drafts.ext = '.md'
+" let drafts.path = "~/.org/drafts/"
+" let drafts.syntax = 'markdown'
+" let drafts.diary_index = 'journal'
+" let drafts.diary_header = '📖'
+" let drafts.diary_rel_path = 'journal'
 
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><tab>
-	 \ neosnippet#expandable_or_jumpable() ?
-	 \    "\<Plug>(neosnippet_expand_or_jump)" :
-         \ 	  pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><tab> neosnippet#expandable_or_jumpable() ?
-\ "\<plug>(neosnippet_expand_or_jump)" : "\<tab>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
-" ==============================================================================
-" Test + VTR
-" ==============================================================================
-
-let test#strategy = "vtr"
-
-nmap <silent> t<C-n> :TestNearest<CR> " t Ctrl+n
-nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
-nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
-nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
-nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
-
-nnoremap <leader>fr :VtrFocusRunner<cr>
-nnoremap <leader>kr :VtrKillRunner<cr>
-nnoremap <leader>rr :VtrSendLinesToRunner<cr>
-nnoremap <leader>dr :VtrSendCtrlD<cr>
-nnoremap <leader>ar :VtrAttachToPane<cr>
+" let g:vimwiki_list = [notes, drafts]
 
 " ==============================================================================
 " Autocommands
@@ -551,10 +492,6 @@ autocmd BufWritePre * call utils#stripTrailingWhitespaces()
 
 " resize splits when the window is resized
 autocmd VimResized * :wincmd =
-
-" prettier settings
-autocmd FileType javascript setlocal
-      \ formatprg=prettier\ --stdin\ --parser=flow\ --single-quote\ --print-width=125\
 
 " run checktime in buffers, but avoiding the "Command Line" (q:) window
 autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
@@ -567,16 +504,6 @@ augroup line_return
         \     execute 'normal! g`"zvzz' |
         \ endif
 augroup END
-
-" aug autopairs to not auto close on rust's lifetime syntax
-augroup vimrc-rust-autopairs
-  autocmd!
-  autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
-augroup END
-
-" number stuff
-set number
-set relativenumber
 
 augroup linenumbers
   autocmd!

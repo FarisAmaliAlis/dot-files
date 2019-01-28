@@ -13,6 +13,7 @@ unsetopt nomatch
 # ==============================================================================
 
 # Path to your oh-my-zsh installation.
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -40,10 +41,10 @@ plugins=(
   dirhistory
   git
   gpg-agent
+  kubectl
   osx
   tmux
   vi-mode
-  zsh-completions
   zsh-syntax-highlighting
 )
 
@@ -52,7 +53,6 @@ GEOMETRY_PROMPT_PLUGINS=(
   jobs
   git
 )
-
 # ==============================================================================
 # Sources
 # ==============================================================================
@@ -64,33 +64,9 @@ source $ZSH/oh-my-zsh.sh
 # Aliases
 # ==============================================================================
 
-# ------------------------------------------
-# Services
-# ------------------------------------------
-alias bs="brew services"
-alias bsl="brew services list"
-
-# ------------------------------------------
-# Applications
-# ------------------------------------------
 alias v="nvim"
 alias ec="emacsclient -c"
 alias et="emacsclient -t"
-
-# ------------------------------------------
-# Language specific
-# ------------------------------------------
-alias rb="ruby"
-alias nd="node"
-
-# ------------------------------------------
-# Forks
-# ------------------------------------------
-alias fparcel="node --inspect ~/Forks/parcel/bin/cli.js"
-
-# ------------------------------------------
-# Other
-# ------------------------------------------
 alias q="exit"
 alias localip="ipconfig getifaddr en0"
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -110,14 +86,13 @@ export MYNVIMRC="~/.config/nvim/init.vim"
 export KEYTIMEOUT=1
 
 # Directories
-export GOPATH=$WORKSPACE/gospace
+export GOPATH="$HOME/.go"
 export NVM_DIR="$HOME/.nvm"
-export WORKSPACE=$HOME/Workspace
+export SDKMAN_DIR="$HOME/.sdkman"
 
 # PATH
 export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # GPGTTYP
 export GPG_TTY=$(tty)
@@ -126,7 +101,6 @@ export GPG_TTY=$(tty)
 # ==============================================================================
 # Hooks
 # ==============================================================================
-
 eval "$(direnv hook zsh)"
 
 # ==============================================================================
@@ -138,4 +112,4 @@ eval "$(direnv hook zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
-[ -f ~/.rocket-aliases.zsh ] && source ~/.rocket-aliases.zsh
+[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
