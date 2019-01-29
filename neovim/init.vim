@@ -314,7 +314,7 @@ tnoremap <Esc> <C-\><C-n>
 " Netrw explore
 nnoremap <silent> <F1> :Explore<CR>
 " Free
-" nnoremap <silent> <F2>
+nnoremap <silent> <F2> :syntax sync fromstart<CR>
 " Toggle fmt
 nnoremap <silent> <F3> :call utils#toggleFmt()<CR>
 " Source (reload configuration)
