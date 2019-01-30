@@ -88,7 +88,7 @@
   :ensure t
   :config
   (global-git-gutter-mode t))
-  
+
 ;; -- frames/windows/buffers management
 (use-package eyebrowse
   :ensure t
