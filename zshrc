@@ -1,104 +1,80 @@
-# Disable control flow (ctrl-s / ctrl-q)
+# Disable control flow. (ctrl-s / ctrl-q)
 stty stop '' -ixoff -ixon
 
-# Dont raise errors when regex nomatch fires
+# Dont raise errors when regex nomatch occurs.
 unsetopt nomatch
 
-# ==============================================================================
-# Core settings
-# ==============================================================================
-# Path to your oh-my-zsh installation.
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-export ZSH=$HOME/.oh-my-zsh
+# Preserve history per pane.
+setopt nosharehistory
 
-ZSH_THEME='geometry/geometry'
-GEOMETRY_SYMBOL_KUBE=" "
-GEOMETRY_PROMPT_PLUGINS=(git kube)
+# Reduce zsh key delay.
+export KEYTIMEOUT=1
 
-# Disable auto title setting
-DISABLE_AUTO_TITLE="true"
+# Editor
+export EDITOR=nvim
 
-# Locale
+# Locale.
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Preserve history per pane
-setopt nosharehistory
+# Render tty gpg
+export GPG_TTY=$(tty)
 
-# ==============================================================================
-# Plugins declarations
-# ==============================================================================
+# Path to oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Path to runtime directories.
+export CARGO_HOME=$HOME/.cargo
+export GOPATH=$HOME/.go
+
+# PATH
+export PATH=$GOPATH/bin:$PATH
+export PATH=$CARGO_HOME/bin:$PATH
+
+# Theme settings.
+ZSH_THEME="geometry/geometry"
+GEOMETRY_PROMPT_PLUGINS=(
+  git
+)
+
+# Disable auto title settings.
+DISABLE_AUTO_TITLE="true"
+
+# Plugin declarations.
 plugins=(
   autojump
   aws
+  bundler
   colored-man-pages
   common-aliases
   git
+  git-extras
+  gitfast
   gpg-agent
   kubectl
   tmux
   vi-mode
-  zsh-completions
   zsh-syntax-highlighting
   zsh_reload
 )
 
-# ==============================================================================
-# Sources
-# ==============================================================================
-# oh-my-zsh
+autoload -U compinit && compinit
+
+# Sources.
 source $ZSH/oh-my-zsh.sh
-# kubectl
 source <(kubectl completion zsh)
 
-# ==============================================================================
-# Aliases
-# ==============================================================================
+# Aliases.
 alias v="nvim"
 alias q="exit"
-alias ec="emacsclient -c"
-alias et="emacsclient -t"
 alias kns="kubens"
 alias kctx="kubectx"
 alias localip="ipconfig getifaddr en0"
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
 
-# ==============================================================================
-# Exports
-# ==============================================================================
-# 256 color support
-export TERM=xterm-256color
-
-# Editor settings
-export EDITOR="nvim"
-export MYNVIMRC="~/.config/nvim/init.vim"
-
-# Environments
-export KEYTIMEOUT=1
-
-# Directories
-export GOPATH="$HOME/.go"
-export NVM_DIR="$HOME/.nvm"
-export SDKMAN_DIR="$HOME/.sdkman"
-
-# PATH
-export PATH=$GOPATH/bin:$PATH
-export PATH=$HOME/.cargo/bin:$PATH
-
-# GPGTTYP
-export GPG_TTY=$(tty)
-
-# ==============================================================================
-# Hooks
-# ==============================================================================
+# Hooks.
 eval "$(direnv hook zsh)"
+eval "$(rbenv init -)"
 
-# ==============================================================================
-# Loaders
-# ==============================================================================
-[ -n "$TMUX" ] && export TERM=screen-256color
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -f ~/.kube-geometry.zsh ] && source ~/.kube-geometry.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
-[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+# Loaders.
+[ -s "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
