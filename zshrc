@@ -54,6 +54,4 @@ alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
 eval "$(direnv hook zsh)"
 
 # Loaders.
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-
-
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
