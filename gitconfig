@@ -1,17 +1,14 @@
 [branch]
         autosetuprebase = always
-
 [core]
         excludesfile = ~/.gitignore
         editor = nvim
         pager = diff-so-fancy | less --tabs=4 -RFX
-
 [color]
         status = always
         ui = true
-
 [commit]
-	gpgsign = true
+        gpgsign = true
 
 [color "diff-highlight"]
         oldNormal = red bold
@@ -45,51 +42,54 @@
 [push]
         default = simple
         followTags = true
-
 [user]
         name = Faris Amali Alis
-	useConfigOnly = true
+        useConfigOnly = true
+        email = faris.ali@starchild.my
 
 [status]
         showUntrackedFiles = all
-
 [merge]
+        tool = opendiff
         conflictstyle = diff3
-        ; ff = only
+        ff = only
+
+[mergetool]
+        keepBackup = false
 
 [alias]
         rank = shortlog -sn --no-merges
         amend = commit --amend
         prune = fetch --prune
         stash-all = stash save --include-untracked
-	it = !git init && git commit --allow-empty -m \"initial commit [empty]\"
-	please = push --force-with-lease
-	commend = commit --amend --no-edit
-	ps = push
-	pl = pull
-	stsh = stash --keep-index
-	staash = stash --include-untracked
-	staaash = stash --all
-	ss = status --short --branch
-	merc = merge --no-ff
-	merff = merge --ff
-	merffo = merge --ff-only
-	grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
-	rbi = rebase --interactive --autosquash --autostash
-	safepull = fetch && merffo
-	sp = safepull
-	addi = add --interactive
-	ap = add --patch
-	chp = cherry-pick
-	chpn = cherry-pick --no-commit
-	xhp = cherry-pick -Xtheirs
-	xhpn = cherry-pick -Xtheirs --no-commit
-	fixup = "!f() { git commit -m \"fixup! $1\"; }; f"
-	squash = "!f() { git commit -m \"squash! $1\"; }; f"
-	oops = fixup
-
-[magit]
-        hideCampaign = true
+        it = !git init && git commit --allow-empty -m \"initial commit [empty]\"
+        please = push --force-with-lease
+        commend = commit --amend --no-edit
+        ps = push
+        pl = pull
+        stsh = stash --keep-index
+        staash = stash --include-untracked
+        staaash = stash --all
+        ss = status --short --branch
+        merc = merge --no-ff
+        merff = merge --ff
+        merffo = merge --ff-only
+        grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+        rbi = rebase --interactive --autosquash --autostash
+        safepull = fetch && merffo
+        sp = safepull
+        addi = add --interactive
+        ap = add --patch
+        chp = cherry-pick
+        chpn = cherry-pick --no-commit
+        xhp = cherry-pick -Xtheirs
+        xhpn = cherry-pick -Xtheirs --no-commit
+        fixup = "!f() { git commit -m \"fixup! $1\"; }; f"
+        squash = "!f() { git commit -m \"squash! $1\"; }; f"
+        oops = fixup
 
 [gpg]
-	program = gpg
+        program = gpg
+
+[pager]
+        branch = false
