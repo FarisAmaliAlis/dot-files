@@ -23,6 +23,7 @@ plugins=(
   colored-man-pages
   common-aliases
   fzf
+  gcloud
   git
   git-extras
   gitfast
@@ -31,8 +32,8 @@ plugins=(
   minikube
   tmux
   vi-mode
-  zsh-syntax-highlighting
   zsh_reload
+  zsh-syntax-highlighting
 )
 
 autoload -U compinit && compinit
@@ -52,6 +53,7 @@ alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Hooks.
 eval "$(direnv hook zsh)"
+eval `keychain --quiet --eval --agents ssh id_rsa`
 
 # Loaders.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

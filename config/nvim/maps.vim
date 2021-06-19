@@ -93,6 +93,7 @@ xnoremap . :norm.<CR>
 " navigate popup menu
 inoremap <expr> <C-j> pumvisible() ? "\<C-N>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-P>" : "\<C-k>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " quick save and close buffer
 nnoremap ,w :w<CR>
@@ -137,6 +138,10 @@ vnoremap ,s :!sort<CR>
 cnoremap ww wqall
 cnoremap qq qall
 
+" prevent x from overriding what's in the clipboard
+noremap x "_x
+noremap X "_X
+
 " terminal-mode escape
 tnoremap <Esc> <C-\><C-n>
 
@@ -178,7 +183,7 @@ nnoremap <silent> + :bn<CR>
 nnoremap <silent> _ :bp<CR>
 
 " fugitive
-nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gH :Gbrowse<CR>
 vnoremap <leader>gH :Gbrowse<CR>
 
@@ -190,3 +195,6 @@ nnoremap <silent> ,g :call util#searchCurrentWordWithRg()<CR>
 
 " buf only delete
 nnoremap ,C :call util#bufferClear()<CR>
+
+" format on <cr>
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"

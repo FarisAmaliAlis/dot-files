@@ -48,8 +48,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-rhubarb'
   " surround (cs"')
   Plug 'tpope/vim-surround'
-  " matchit enhances jump motion
-  Plug 'tmhedberg/matchit'
   " vim + tmux clipboard
   Plug 'tmux-plugins/vim-tmux-focus-events'
   Plug 'roxma/vim-tmux-clipboard'
@@ -81,7 +79,7 @@ let ayucolor="dark"
 colorscheme ayu
 
 language en_US.utf8
-set clipboard+=unnamedplus  " allow to use system clipboard
+set clipboard=unnamedplus  " allow to use system clipboard
 set cmdheight=1             " command line height
 set cmdheight=2             " two spaces command line area height
 set expandtab               " use space characters in place of tab characters
@@ -111,7 +109,6 @@ set smartcase               " make search case sensitive only if it contains U l
 set softtabstop=2           " two spaces soft tab stop
 set splitbelow              " splitting a window will put the new window below the current
 set splitright              " splitting a window will put the new window right of the current
-set synmaxcol=160           " don't try to syntax highlight minified files
 set textwidth=99            " text width is 99 characters max
 set ttimeout                " work sanely.
 set ttimeoutlen=10          " (by Steve Losh)
@@ -119,6 +116,7 @@ set updatetime=1000         " update time used to create swap file or other thin
 set virtualedit=block       " to be able to select past EOL in visual block mode
 set wrapscan                " search again from top when reached the bottom
 set formatoptions-=cro      " no new line comments
+set mouse=a
 
 let g:python_host_prog='~/.asdf/shims/python2'
 let g:python3_host_prog='~/.asdf/shims/python3'
@@ -167,7 +165,7 @@ nnoremap <silent> <leader>ff :call CocAction('format')<CR>
 nnoremap <silent> <leader>fi :call CocAction('jumpImplementation')<CR>
 
 " enable auto pairs fly mode
-let g:AutoPairsFlyMode=1
+let g:AutoPairsFlyMode=0
 let g:AutoPairsShortcutBackInsert='<C-v>'
 
 " enable deoplete

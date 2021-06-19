@@ -1,3 +1,7 @@
+# access local x-server with xcxsrv
+export DISPLAY=$(awk '/nameserver/ {print $2}' /etc/resolv.conf):0.0
+export LIBGL_ALWAYS_INDIRECT=1
+
 # Reduce zsh key delay
 export KEYTIMEOUT=1
 
@@ -28,7 +32,10 @@ export CARGO_HOME=$HOME/.cargo
 export GOPATH=$HOME/.go
 
 # PATH
-export PATH="/usr/local/sbin:$PATH"
+export PATH=/usr/local/sbin:$PATH
 export PATH=$CARGO_HOME/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
+export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+export PATH=$HOME/.pulumi/bin:$PATH
 
+export CLOUDSDK_PYTHON=/usr/bin/python3.8
